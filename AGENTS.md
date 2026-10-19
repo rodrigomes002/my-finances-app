@@ -15,6 +15,7 @@ Ajudar usuários com a gestão financeira pessoal, dar vizibilidade dos gastos p
 - Respeitar os princípios SOLID.
 
 ## Regras de desenvolvimento
+- Seguir padrões KISS e SOLID
 - Reutilizar componentes existentes.
 - Evitar duplicação de código.
 - Não adicionar dependências sem necessidade.

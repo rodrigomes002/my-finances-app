@@ -1,11 +1,16 @@
+import 'dart:async';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'dashboard_view.dart';
+import '../viewmodels/dashboard_view_model.dart';
 import '../viewmodels/home_view_model.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  const HomeView({super.key, this.dashboardViewModel});
+
+  final DashboardViewModel? dashboardViewModel;
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -14,13 +19,23 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final HomeViewModel _viewModel = HomeViewModel();
+  late final DashboardViewModel _dashboardViewModel;
   int _selectedIndex = 0;
 
   static const List<String> _destinations = <String>['Dashboard', 'Upload'];
 
   @override
+  void initState() {
+    super.initState();
+    _dashboardViewModel =
+        widget.dashboardViewModel ?? DashboardViewModel();
+    unawaited(_dashboardViewModel.load());
+  }
+
+  @override
   void dispose() {
     _viewModel.dispose();
+    _dashboardViewModel.dispose();
     super.dispose();
   }
 
@@ -111,6 +126,9 @@ class _HomeViewState extends State<HomeView> {
                     setState(() {
                       _selectedIndex = index;
                     });
+                    if (index == 0) {
+                      unawaited(_dashboardViewModel.load());
+                    }
                     Navigator.pop(context);
                   },
                 ),
@@ -119,7 +137,7 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       body: _selectedIndex == 0
-          ? const DashboardView()
+          ? DashboardView(viewModel: _dashboardViewModel)
           : _buildUploadView(context),
     );
   }

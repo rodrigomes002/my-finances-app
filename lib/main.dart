@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'views/home_view.dart';
+import 'viewmodels/dashboard_view_model.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, this.dashboardViewModel});
+
+  final DashboardViewModel? dashboardViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeView(),
+      home: HomeView(dashboardViewModel: dashboardViewModel),
     );
   }
 }
