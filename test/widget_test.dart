@@ -13,9 +13,37 @@ void main() {
   testWidgets('shows the PDF file selector', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
-    expect(find.text('Upload file'), findsOneWidget);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Upload').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Upload de documentos'), findsOneWidget);
     expect(find.text('PDF file'), findsOneWidget);
-    expect(find.text('Select a PDF file'), findsOneWidget);
-    expect(find.text('Submit'), findsOneWidget);
+    expect(find.text('Selecionar arquivo PDF'), findsOneWidget);
+    expect(find.text('Enviar documento'), findsOneWidget);
+  });
+
+  testWidgets('navigates between Dashboard and Upload', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    expect(find.text('Seu resumo financeiro'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Upload').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('PDF file'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dashboard').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Seu resumo financeiro'), findsOneWidget);
+    expect(find.text('R\$ 24.580,00'), findsOneWidget);
   });
 }

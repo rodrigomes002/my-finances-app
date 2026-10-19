@@ -7,6 +7,7 @@ class PdfPickerService {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: <String>['pdf'],
+      withData: true,
     );
 
     if (result == null || result.files.isEmpty) {
