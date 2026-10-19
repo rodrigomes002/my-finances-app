@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../config/api_config.dart';
 import '../models/lancamento.dart';
 import '../models/resumo_lancamentos.dart';
 
@@ -10,8 +11,7 @@ class LancamentosApiService {
     http.Client? client,
     Uri? baseUri,
   }) : _client = client ?? http.Client(),
-       _baseUri =
-           baseUri ?? Uri.parse('http://localhost:8080/api/lancamentos');
+       _baseUri = baseUri ?? ApiConfig.lancamentosEndpoint;
 
   final http.Client _client;
   final Uri _baseUri;

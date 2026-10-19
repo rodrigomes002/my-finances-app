@@ -1,10 +1,11 @@
 import 'package:http/http.dart' as http;
 
+import '../config/api_config.dart';
+
 class FileUploadService {
   FileUploadService({http.Client? client, Uri? endpoint})
     : _client = client ?? http.Client(),
-      _endpoint =
-          endpoint ?? Uri.parse('http://localhost:8080/api/files/upload');
+      _endpoint = endpoint ?? ApiConfig.fileUploadEndpoint;
 
   final http.Client _client;
   final Uri _endpoint;
